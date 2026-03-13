@@ -1,3 +1,8 @@
+name: Austin Leigh
+eid: ajl4998
+githubusername: App1ejuic3
+comments: n/a
+
 WeatherPortal Web App
 =====================
 

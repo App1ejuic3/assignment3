@@ -1,13 +1,13 @@
 function draw_chart(city, data_label, xaxis_data, chart_data) {
 
 	outputImg = document.getElementById("outputImg");
-	// TODO: delete previous children
-	//outputImg.innerHTML = '';
+	outputImg.innerHTML = '';
 	newElem = document.createElement("canvas");
 	elemId = city + "-" + data_label;
 	newElem.setAttribute("id",elemId);
-
+ 
 	//const ctx = document.getElementById('myChart');
+
 
   new Chart(newElem, {
     type: 'line',
