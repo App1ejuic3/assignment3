@@ -22,5 +22,3 @@ Try REST API
 Stop
 ----
 1. Ctrl+C in the window where application.py was started
-
-

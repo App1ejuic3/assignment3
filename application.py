@@ -139,57 +139,6 @@ class UserCity(Base):
         return fields
 
 
-class User(Base):
-    __tablename__ = 'user'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, unique=True)
-    password = Column(String)
-
-    def __repr__(self):
-        return "<User(name='%s')>" % (self.name)
-
-    def as_dict(self):
-        fields = {}
-        for c in self.__table__.columns:
-            fields[c.name] = getattr(self, c.name)
-        return fields
-
-
-class City(Base):
-    __tablename__ = 'city'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    adminid = Column(Integer, ForeignKey('admin.id'))
-    name = Column(String)
-    url = Column(String)
-
-    def __repr__(self):
-        return "<City(name='%s')>" % (self.name)
-
-    def as_dict(self):
-        fields = {}
-        for c in self.__table__.columns:
-            fields[c.name] = getattr(self, c.name)
-        return fields
-
-
-class UserCity(Base):
-    __tablename__ = 'usercity'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    userId = Column(Integer, ForeignKey('user.id'))
-    cityId = Column(Integer, ForeignKey('city.id'))
-    month = Column(String)
-    year = Column(String)
-    weather_params = Column(String)
-
-    def __repr__(self):
-        return "<UserCity(userId='%s', cityId='%s')>" % (self.userId, self.cityId)
-
-    def as_dict(self):
-        fields = {}
-        for c in self.__table__.columns:
-            fields[c.name] = getattr(self, c.name)
-        return fields
-
 
 
 ## Admin REST API
@@ -321,7 +270,7 @@ def adminindex():
     return render_template('adminindex.html')
 
 
-## Section 2: User REST API
+## Section 2: 
 
 @app.route("/users", methods=['POST'])
 def add_user():
@@ -373,7 +322,7 @@ def delete_user_by_id(id):
     return Response("User with %s deleted." % id, status=200)
 
 
-## Section 3: Admin Cities REST API
+## Section 3: 
 
 @app.route("/admin/<admin_id>/cities", methods=['POST'])
 def add_city(admin_id):
@@ -432,7 +381,7 @@ def delete_city_by_id(admin_id, city_id):
     return Response("City with %s deleted." % city_id, status=200)
 
 
-## Section 4: User-City Tracking REST API
+## Section 4: 
 
 @app.route("/users/<user_id>/cities", methods=['POST'])
 def add_user_city(user_id):
@@ -475,7 +424,7 @@ def get_user_cities(user_id):
     if user is None:
         return Response("User with id %s not found." % user_id, status=404)
 
-    # 4.3: filter by city name if ?name= query param provided
+    # 4.3: 
     city_name = request.args.get('name')
     if city_name:
         city = db.query(City).filter_by(name=city_name).first()
@@ -495,7 +444,7 @@ def get_user_cities(user_id):
             "weather_params": uc.weather_params
         }
 
-    # 4.2: return all user cities
+    # 4.2:
     user_cities = db.query(UserCity).filter_by(userId=user_id).all()
     return {"usercities": [uc.as_dict() for uc in user_cities]}
 
